@@ -29,7 +29,6 @@ app.get('/ping', (req, res) => {
 app.get('/slow', async (req, res) => {
   const ms = Number(req.query.ms || 250);
 
-  // Manual custom span (in addition to auto-instrumented HTTP span)
   const tracer = trace.getTracer('app');
   await tracer.startActiveSpan('business_logic.simulated_work', async (span) => {
     try {
@@ -64,14 +63,14 @@ app.get('/items', async (req, res) => {
 });
 
 app.get('/error', (req, res) => {
-  // Useful to show error traces in Jaeger
+
   throw new Error('Intentional error endpoint');
 });
 
 async function main() {
   await connectMongo();
 
-  // basic error handler (captures thrown errors)
+
   app.use((err, req, res, next) => {
     console.error('[app] error:', err);
     res.status(500).json({ ok: false, error: err.message });
