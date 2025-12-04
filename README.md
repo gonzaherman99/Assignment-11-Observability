@@ -43,7 +43,7 @@ curl http://localhost:3031/items
 
 ## View traces in Jaeger
 
-## Open Jaeger UI: http://localhost:16686
+### Open Jaeger UI: http://localhost:16686
 
 Select service: otel-node-demo
 
